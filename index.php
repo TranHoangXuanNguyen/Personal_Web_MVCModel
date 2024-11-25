@@ -1,5 +1,5 @@
 <?php 
 session_start();
-require_once('./router/routers.php');
-$app = new Router();
+require_once('./router/router.php');
+$app = new App();
 ?>

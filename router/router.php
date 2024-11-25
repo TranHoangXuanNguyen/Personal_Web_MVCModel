@@ -1,5 +1,9 @@
 <?php
-class Router {
+// session_start();
+$routes = [
+    'default_controller' => 'homeController.php',
+];
+class App{
     private $__controller, $__action, $__params;
 
     public function __construct() {
@@ -28,17 +32,22 @@ class Router {
             '/Home' => 'homeController.php',
             '/AboutUs' => 'aboutUsController.php',
         ];
-        if(isset($_SESSION['user'])&& $_SESSION['user']['role']=='admin'){
-            $routes = [
-            '/' => 'homeController.php',
-            '/Home' => 'homeController.php',
-            '/AboutUs' => 'aboutUsController.php',];       
-         }
+        if (isset($_SESSION['user']) && $_SESSION['user']['role'] == 'admin') {
+            $routes = array_merge($routes, [
+                '/AdminDashboard' => 'adminDashboardController.php',
+                '/AdminUsers' => 'adminUsersController.php',
+                '/AdminProducts' => 'adminProductsController.php',
+                '/AdminOrders' => 'adminOrdersController.php',
+            ]);
+        }
     
         foreach ($routes as $route => $controllerFile) {
-            if ($route == $url) {
-                require_once 'controllers/' . $controllerFile;
-                break;
+            if (isset($routes[$url])) {
+                // Include the controller file based on the route
+                require_once 'controllers/' . $routes[$url];
+            } else {
+                // Handle unknown routes or 404 page
+                echo "404 - Page not found";
             }
         }
     }}

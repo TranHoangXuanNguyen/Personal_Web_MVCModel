@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Set the base path if your app is in a subfolder
+RewriteBase /Nguyen_PHP/MVC_Project/
+
+# Don't rewrite if the requested file or directory exists
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Redirect everything to index.php
+RewriteRule ^(.*)$ index.php/$1 [QSA,L]
